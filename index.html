@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belajar HTML untuk Pemula</title>
+  <style>
+    :root {
+      --primary: #4facfe;
+      --secondary: #00f2fe;
+      --text: #333;
+      --bg: #f9f9f9;
+      --card: #fff;
+    }
+    body.dark {
+      --primary: #222;
+      --secondary: #555;
+      --text: #eee;
+      --bg: #111;
+      --card: #222;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      transition: 0.3s;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 30px;
+      text-align: center;
+      color: white;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    nav {
+      background: var(--card);
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    nav a:hover { color: var(--primary); }
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: 0.3s;
+    }
+    .card:hover { transform: translateY(-5px); }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 16px;
+    }
+    button:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      text-align: center;
+      background: var(--card);
+      font-size: 14px;
+      color: var(--text);
+    }
+    #clock {
+      font-size: 1.5em;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .quiz label { display: block; margin: 8px 0; }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    .toggle-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    /* Canvas confetti */
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div class="toggle-btn" onclick="toggleMode()">🌙 Mode</div>
+  <canvas id="confettiCanvas"></canvas>
+
+  <header>
+    <h1>Belajar HTML Pemula</h1>
+    <p>Website interaktif untuk belajar dasar HTML, CSS, dan JavaScript</p>
+    <div id="clock"></div>
+  </header>
+
+  <nav>
+    <a href="#kenapa">Kenapa HTML?</a>
+    <a href="#motivasi">Motivasi</a>
+    <a href="#quiz">Kuis</a>
+  </nav>
+
+  <section id="kenapa">
+    <div class="card">
+      <h2>Apa itu HTML?</h2>
+      <p>HTML (HyperText Markup Language) adalah bahasa dasar untuk membuat halaman web. Dengan HTML, kita bisa membuat struktur teks, gambar, link, tabel, dan banyak lagi.</p>
+    </div>
+  </section>
+
+  <section id="motivasi">
+    <div class="card">
+      <h2>Motivasi Belajar</h2>
+      <p>Klik tombol di bawah untuk mendapatkan pesan motivasi acak:</p>
+      <button onclick="tampilkanPesan()">Dapatkan Motivasi</button>
+      <p id="pesan" style="margin-top:15px; font-weight: bold; color: var(--primary);"></p>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="card">
+      <h2>Kuis HTML Dasar</h2>
+      <form id="quizForm" class="quiz">
+        <p>1. Apa kepanjangan dari HTML?</p>
+        <label><input type="radio" name="q1" value="a"> Hyperlinks and Text Markup Language</label>
+        <label><input type="radio" name="q1" value="b"> HyperText Markup Language</label>
+        <label><input type="radio" name="q1" value="c"> Home Tool Markup Language</label>
+
+        <p>2. Tag mana yang digunakan untuk membuat paragraf?</p>
+        <label><input type="radio" name="q2" value="a"> &lt;head&gt;</label>
+        <label><input type="radio" name="q2" value="b"> &lt;title&gt;</label>
+        <label><input type="radio" name="q2" value="c"> &lt;p&gt;</label>
+
+        <p>3. Tag mana yang digunakan untuk menampilkan gambar?</p>
+        <label><input type="radio" name="q3" value="a"> &lt;img&gt;</label>
+        <label><input type="radio" name="q3" value="b"> &lt;picture&gt;</label>
+        <label><input type="radio" name="q3" value="c"> &lt;src&gt;</label>
+
+        <br>
+        <button type="button" onclick="cekJawaban()">Kirim Jawaban</button>
+      </form>
+      <p id="quizResult" class="result"></p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Belajar HTML Pemula | Dibuat dengan ❤️ dan semangat belajar
+  </footer>
+
+  <script>
+    // Fungsi Suara
+    function playBeep(frequency = 440, duration = 200) {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+      oscillator.start();
+      setTimeout(() => oscillator.stop(), duration);
+    }
+
+    // Jam Digital
+    function updateClock() {
+      let now = new Date();
+      let jam = String(now.getHours()).padStart(2, '0');
+      let menit = String(now.getMinutes()).padStart(2, '0');
+      let detik = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById("clock").innerText = jam + ":" + menit + ":" + detik;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Motivasi
+    function tampilkanPesan() {
+      playBeep(500, 150);
+      const pesan = [
+        "Belajar itu investasi terbaik untuk masa depanmu!",
+        "Jangan takut salah, setiap error adalah pelajaran.",
+        "Konsisten lebih penting daripada cepat.",
+        "Kamu luar biasa, terus semangat belajar!"
+      ];
+      let randomPesan = pesan[Math.floor(Math.random() * pesan.length)];
+      document.getElementById("pesan").innerText = randomPesan;
+    }
+
+    // Kuis + Confetti
+    function cekJawaban() {
+      let score = 0;
+      let form = document.forms["quizForm"];
+      if (form["q1"].value === "b") score++;
+      if (form["q2"].value === "c") score++;
+      if (form["q3"].value === "a") score++;
+      document.getElementById("quizResult").innerText =
+        "Nilai kamu: " + score + "/3";
+
+      if (score === 3) {
+        playBeep(800, 200);
+        setTimeout(() => playBeep(1000, 200), 250);
+        startConfetti(); // 🎉 confetti saat sempurna
+      } else if (score > 0) {
+        playBeep(600, 200);
+      } else {
+        playBeep(200, 400);
+      }
+    }
+
+    // Dark Mode Toggle
+    function toggleMode() {
+      playBeep(400, 100);
+      document.body.classList.toggle("dark");
+    }
+
+    // Confetti
+    function startConfetti() {
+      const canvas = document.getElementById("confettiCanvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confetti = [];
+      const colors = ["#fce18a", "#ff726d", "#b48def", "#3ee6c8"];
+
+      for (let i = 0; i < 100; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 50 + 50,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          tilt: Math.random() * 10 - 10,
+        });
+      }
+
+      function drawConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach((c) => {
+          ctx.beginPath();
+          ctx.fillStyle = c.color;
+          ctx.fillRect(c.x, c.y, c.r, c.r);
+        });
+        update();
+      }
+
+      function update() {
+        confetti.forEach((c) => {
+          c.y += 2;
+          c.x += Math.sin(c.y / 50);
+          if (c.y > canvas.height) {
+            c.y = -10;
+            c.x = Math.random() * canvas.width;
+          }
+        });
+      }
+
+      let duration = 3000; // 3 detik
+      let start = Date.now();
+      function animate() {
+        if (Date.now() - start < duration) {
+          drawConfetti();
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>
