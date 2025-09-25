@@ -8,8 +8,11 @@
 <style>
   * {margin:0; padding:0; box-sizing:border-box;}
   body {font-family: Arial, sans-serif; background:#fafafa; color:#333;}
+
+  /* Navbar */
   nav {
-    background:#d35400; padding:15px 30px; display:flex; justify-content:space-between; align-items:center;
+    background:#d35400; padding:15px 30px;
+    display:flex; justify-content:space-between; align-items:center;
     color:#fff; position:sticky; top:0; z-index:1000;
   }
   nav .logo {font-size:20px; font-weight:bold;}
@@ -17,7 +20,15 @@
   nav ul li {cursor:pointer;}
   nav .right {display:flex; align-items:center; gap:15px;}
   nav button {background:#fff; color:#d35400; border:none; padding:7px 15px; border-radius:5px; cursor:pointer; font-weight:bold;}
-  .hero {background:url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=1600') center/cover no-repeat; height:300px; display:flex; align-items:center; justify-content:center; color:white; font-size:32px; font-weight:bold; text-shadow:2px 2px 4px rgba(0,0,0,0.6);}
+
+  /* Hero */
+  .hero {
+    background:url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=1600') center/cover no-repeat;
+    height:300px; display:flex; align-items:center; justify-content:center;
+    color:white; font-size:32px; font-weight:bold; text-shadow:2px 2px 4px rgba(0,0,0,0.6);
+  }
+
+  /* Produk */
   .produk {padding:40px 60px;}
   .produk h2 {text-align:center; margin-bottom:20px; color:#d35400;}
   .kategori-tabs {display:flex; justify-content:center; gap:15px; margin-bottom:20px; flex-wrap:wrap;}
@@ -25,18 +36,22 @@
   .produk-grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px;}
   .card {background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:transform 0.2s;}
   .card:hover {transform:scale(1.03);}
-  .card img {width:100%; height:180px; object-fit:cover;}
+  .card img {width:100%; height:200px; object-fit:cover;}
   .card-body {padding:15px;}
   .card-body h3 {margin-bottom:10px;}
   .price {color:#27ae60; font-weight:bold;}
   .rating {color:#f39c12; margin:5px 0;}
   .komentar {font-size:14px; margin-top:5px; background:#f9f9f9; padding:5px; border-radius:5px;}
+
+  /* Modal Login */
   .modal {position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center;}
   .modal-content {background:#fff; padding:30px; border-radius:10px; width:300px; text-align:center; position:relative;}
   .modal-content h2 {margin-bottom:20px; color:#d35400;}
-  .modal-content input, .modal-content select, .modal-content textarea {width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px;}
+  .modal-content input {width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px;}
   .modal-content button {width:100%; background:#d35400; color:#fff; padding:10px; border:none; border-radius:5px; font-weight:bold; margin-top:10px;}
   .close-btn {position:absolute; top:10px; right:10px; cursor:pointer; font-weight:bold; font-size:18px;}
+
+  /* Dashboard */
   #dashboard {display:none; padding:30px;}
   #dashboard h2 {color:#d35400; margin-bottom:20px;}
   .tabs {display:flex; gap:15px; margin-bottom:20px; flex-wrap:wrap;}
@@ -45,6 +60,12 @@
   .tab-content.active {display:block;}
   .form-produk input, .form-produk select, .form-produk textarea {padding:10px; margin:5px 0; width:100%; border:1px solid #ccc; border-radius:5px;}
   .form-produk button {margin-top:10px; padding:10px; width:100%; background:#27ae60; color:white; border:none; border-radius:5px; font-weight:bold;}
+
+  /* Saran */
+  #saran {padding:40px; background:#f4f4f4;}
+  #saran h2 {text-align:center; margin-bottom:20px; color:#d35400;}
+  #listSaran {max-width:600px; margin:20px auto; background:white; padding:15px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  #listSaran .komentar {margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -55,7 +76,6 @@
     <li onclick="scrollToSection('produk')">Produk</li>
     <li onclick="scrollToSection('about')">Tentang</li>
     <li onclick="scrollToSection('saran')">Saran</li>
-    <li onclick="scrollToSection('grafik')">Grafik</li>
   </ul>
   <div class="right">
     <span id="user-info"></span>
@@ -72,26 +92,18 @@
   <div class="produk-grid" id="produkGrid"></div>
 </section>
 
-<section id="about" style="padding:40px; text-align:center; background:#f4f4f4;">
+<section id="about" style="padding:40px; text-align:center;">
   <h2>Tentang Kami</h2>
   <p>Project B Catering hadir untuk memberikan solusi makanan sehat, lezat, dan praktis untuk acara Anda.</p>
 </section>
 
-<section id="saran" style="padding:40px; text-align:center;">
+<section id="saran">
   <h2>Kirim Saran & Feedback</h2>
   <div class="form-produk" style="max-width:400px;margin:auto;">
-    <input type="text" id="namaVisitor" placeholder="Nama Anda">
     <textarea id="saranVisitor" placeholder="Tulis saran atau feedback Anda..."></textarea>
     <button onclick="tambahSaran()">Kirim Saran</button>
-    <button onclick="exportSaranCSV()">Export Saran CSV</button>
   </div>
-  <div id="listSaran" style="margin-top:20px;"></div>
-</section>
-
-<section id="grafik" style="padding:40px; text-align:center;">
-  <h2>Grafik Monitoring Produk & Rating</h2>
-  <canvas id="chartProduk" style="max-width:800px;margin:auto;"></canvas>
-  <button onclick="exportProdukCSV()" style="margin-top:10px;padding:10px 20px;background:#d35400;color:#fff;border:none;border-radius:5px;cursor:pointer;">Export Produk CSV</button>
+  <div id="listSaran"></div>
 </section>
 
 <div class="modal" id="loginModal">
@@ -112,6 +124,7 @@
     <button onclick="openTab('monitoring')">Monitoring</button>
   </div>
 
+  <!-- Tambah Kategori -->
   <div id="kategoriAdmin" class="tab-content active">
     <h3>Tambah Kategori Baru</h3>
     <div class="form-produk">
@@ -120,6 +133,7 @@
     </div>
   </div>
 
+  <!-- Produk Admin -->
   <div id="produkAdmin" class="tab-content">
     <h3>Tambah Produk Baru</h3>
     <div class="form-produk">
@@ -131,106 +145,284 @@
     </div>
   </div>
 
+  <!-- Monitoring -->
   <div id="monitoring" class="tab-content">
     <h3>Monitoring Data</h3>
-    <p>Grafik & data monitoring dapat dilihat di tab Grafik di atas.</p>
+    <canvas id="produkChart" style="max-width:600px; margin:20px auto; display:block;"></canvas>
+    <canvas id="ratingChart" style="max-width:600px; margin:20px auto; display:block;"></canvas>
+    <button onclick="exportCSV('produk')">Export Produk CSV</button>
+    <button onclick="exportCSV('saran')">Export Saran CSV</button>
   </div>
 </section>
 
 <script>
-let kategoriList = JSON.parse(localStorage.getItem("kategoriList")) || ["Prasmanan","Nasi Box","Snack","Minuman"];
-let produkDefault = [
-  {nama:"Nasi Kotak Ayam", harga:25000, foto:"https://images.unsplash.com/photo-1606788075761-9a60cf6a3d58?w=800", kategori:"Nasi Box", rating:[], komentar:[]},
-  {nama:"Snack Box", harga:15000, foto:"https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800", kategori:"Snack", rating:[], komentar:[]},
-  {nama:"Buffet Prasmanan", harga:50000, foto:"https://images.unsplash.com/photo-1525755662778-989d0524087e?w=800", kategori:"Prasmanan", rating:[], komentar:[]}
-];
-let produkList = JSON.parse(localStorage.getItem("produkList")) || produkDefault;
-let saranList = JSON.parse(localStorage.getItem("saranList")) || [];
+  // ====== Data Awal ======
+  let kategoriList = JSON.parse(localStorage.getItem("kategoriList")) || ["Prasmanan","Nasi Box","Snack","Minuman"];
+  let produkDefault = [
+    {nama:"Nasi Kotak Ayam", harga:25000, foto:"https://images.unsplash.com/photo-1606788075761-9a60cf6a3d58?w=800", kategori:"Nasi Box", rating:[], komentar:[]},
+    {nama:"Snack Box", harga:15000, foto:"https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800", kategori:"Snack", rating:[], komentar:[]},
+    {nama:"Buffet Prasmanan", harga:50000, foto:"https://images.unsplash.com/photo-1525755662778-989d0524087e?w=800", kategori:"Prasmanan", rating:[], komentar:[]}
+  ];
+  let produkList = JSON.parse(localStorage.getItem("produkList")) || produkDefault;
+  let saranList = JSON.parse(localStorage.getItem("saranList")) || [];
 
-const produkGrid = document.getElementById("produkGrid");
-const kategoriTabs = document.getElementById("kategoriTabs");
-const dropdownKategori = document.getElementById("kategoriProduk");
-const listSaranDiv = document.getElementById("listSaran");
+  // ====== Render Produk ======
+  const produkGrid = document.getElementById("produkGrid");
+  function renderProduk(list){
+    produkGrid.innerHTML = "";
+    list.forEach((p,index) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.setAttribute("data-kategori", p.kategori);
 
-// ====== Render Produk ======
-function renderProduk(list){
-  produkGrid.innerHTML="";
-  list.forEach((p,index)=>{
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.setAttribute("data-kategori", p.kategori);
-    let avgRating = 0;
-    if(p.rating.length>0) avgRating = p.rating.reduce((a,b)=>a+b,0)/p.rating.length;
-    card.innerHTML=`
-      <img src="${p.foto}" alt="${p.nama}">
-      <div class="card-body">
-        <h3>${p.nama}</h3>
-        <p class="price">Rp ${parseInt(p.harga).toLocaleString("id-ID")}</p>
-        <p><small>Kategori: ${p.kategori}</small></p>
-        <p class="rating">Rating: ${avgRating.toFixed(1)} ★</p>
-        <div>
-          <label>Berikan Rating:</label>
-          <select onchange="beriRating(${index}, this.value)">
-            <option value="">-</option>
-            <option value="1">1 ★</option>
-            <option value="2">2 ★</option>
-            <option value="3">3 ★</option>
-            <option value="4">4 ★</option>
-            <option value="5">5 ★</option>
-          </select>
+      let avgRating = 0;
+      if(p.rating.length>0) avgRating = p.rating.reduce((a,b)=>a+b,0)/p.rating.length;
+
+      card.innerHTML = `
+        <img src="${p.foto}" alt="${p.nama}">
+        <div class="card-body">
+          <h3>${p.nama}</h3>
+          <p class="price">Rp ${parseInt(p.harga).toLocaleString("id-ID")}</p>
+          <p><small>Kategori: ${p.kategori}</small></p>
+          <p class="rating">Rating: ${avgRating.toFixed(1)} ★</p>
+          <div>
+            <label>Berikan Rating:</label>
+            <select onchange="beriRating(${index}, this.value)">
+              <option value="">-</option>
+              <option value="1">1 ★</option>
+              <option value="2">2 ★</option>
+              <option value="3">3 ★</option>
+              <option value="4">4 ★</option>
+              <option value="5">5 ★</option>
+            </select>
+          </div>
+          <div style="margin-top:5px;">
+            <input type="text" placeholder="Tulis komentar..." id="komentar${index}">
+            <button onclick="tambahKomentar(${index})">Kirim</button>
+          </div>
+          <div id="listKomentar${index}">${p.komentar.map(c=>`<div class="komentar">${c}</div>`).join("")}</div>
         </div>
-        <div style="margin-top:5px;">
-          <input type="text" placeholder="Tulis komentar..." id="komentar${index}">
-          <button onclick="tambahKomentar(${index})">Kirim</button>
-        </div>
-        <div id="listKomentar${index}">${p.komentar.map(c=>`<div class="komentar">${c}</div>`).join("")}</div>
-      </div>
-    `;
-    produkGrid.appendChild(card);
-  });
-  renderChart();
-}
+      `;
+      produkGrid.appendChild(card);
+    });
+    updateCharts();
+  }
 
-// ====== Filter Produk ======
-function updateKategoriTabs(){
-  kategoriTabs.innerHTML="";
-  const allBtn = document.createElement("button");
-  allBtn.textContent="Semua Produk";
-  allBtn.onclick=()=>filterProduk("all");
-  kategoriTabs.appendChild(allBtn);
-  kategoriList.forEach(kat=>{
-    const btn=document.createElement("button");
-    btn.textContent=kat;
-    btn.onclick=()=>filterProduk(kat);
-    kategoriTabs.appendChild(btn);
-  });
-}
-function filterProduk(kat){
-  const cards=document.querySelectorAll(".card");
-  cards.forEach(c=>{
-    if(kat==="all"||c.getAttribute("data-kategori")===kat) c.style.display="block";
-    else c.style.display="none";
-  });
-}
+  // ====== Filter Produk ======
+  const kategoriTabs = document.getElementById("kategoriTabs");
+  function updateKategoriTabs(){
+    kategoriTabs.innerHTML = "";
+    const allBtn = document.createElement("button");
+    allBtn.textContent = "Semua Produk";
+    allBtn.onclick = ()=>filterProduk("all");
+    kategoriTabs.appendChild(allBtn);
+    kategoriList.forEach(kat=>{
+      const btn = document.createElement("button");
+      btn.textContent = kat;
+      btn.onclick = ()=>filterProduk(kat);
+      kategoriTabs.appendChild(btn);
+    });
+  }
 
-// ====== Tambah Produk & Kategori ======
-function updateKategoriDropdown(){
-  dropdownKategori.innerHTML="";
-  kategoriList.forEach(kat=>{
-    const option=document.createElement("option");
-    option.value=kat; option.textContent=kat;
-    dropdownKategori.appendChild(option);
-  });
-}
+  function filterProduk(kat){
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(c=>{
+      if(kat==="all" || c.getAttribute("data-kategori")===kat) c.style.display="block";
+      else c.style.display="none";
+    });
+  }
 
-function tambahProduk(){
-  const nama=document.getElementById("namaProduk").value.trim();
-  const harga=document.getElementById("hargaProduk").value.trim();
-  const foto=document.getElementById("fotoProduk").value.trim();
-  const kategori=document.getElementById("kategoriProduk").value;
-  if(nama && harga && foto){
-    produkList.push({nama,harga,foto,kategori,rating:[],komentar:[]});
-    localStorage.setItem("produkList",JSON.stringify(produkList));
+  // ====== Tambah Produk ======
+  const dropdownKategori = document.getElementById("kategoriProduk");
+  function updateKategoriDropdown(){
+    dropdownKategori.innerHTML="";
+    kategoriList.forEach(kat=>{
+      const option = document.createElement("option");
+      option.value=kat; option.textContent=kat;
+      dropdownKategori.appendChild(option);
+    });
+  }
+
+  function tambahProduk(){
+    const nama = document.getElementById("namaProduk").value.trim();
+    const harga = document.getElementById("hargaProduk").value.trim();
+    const foto = document.getElementById("fotoProduk").value.trim();
+    const kategori = document.getElementById("kategoriProduk").value;
+    if(nama && harga && foto){
+      produkList.push({nama,harga,foto,kategori,rating:[],komentar:[]});
+      localStorage.setItem("produkList",JSON.stringify(produkList));
+      renderProduk(produkList);
+      document.getElementById("namaProduk").value="";
+      document.getElementById("hargaProduk").value="";
+      document.getElementById("fotoProduk").value="";
+      alert("Produk berhasil ditambahkan!");
+    } else alert("Harap isi semua kolom!");
+  }
+
+  // ====== Tambah Kategori ======
+  function tambahKategori(){
+    const namaKat = document.getElementById("namaKategori").value.trim();
+    if(namaKat && !kategoriList.includes(namaKat)){
+      kategoriList.push(namaKat);
+      localStorage.setItem("kategoriList",JSON.stringify(kategoriList));
+      updateKategoriDropdown();
+      updateKategoriTabs();
+      document.getElementById("namaKategori").value="";
+      alert("Kategori berhasil ditambahkan!");
+    } else alert("Kategori sudah ada atau kosong!");
+  }
+
+  // ====== Rating & Komentar ======
+  function beriRating(index, val){
+    if(val){
+      produkList[index].rating.push(parseInt(val));
+      localStorage.setItem("produkList",JSON.stringify(produkList));
+      renderProduk(produkList);
+    }
+  }
+
+  function tambahKomentar(index){
+    const txt = document.getElementById(`komentar${index}`).value.trim();
+    if(txt){
+      produkList[index].komentar.push(txt);
+      localStorage.setItem("produkList",JSON.stringify(produkList));
+      renderProduk(produkList);
+    }
+  }
+
+  // ====== Saran Visitor ======
+  const listSaranDiv = document.getElementById("listSaran");
+  function renderSaran(){
+    listSaranDiv.innerHTML = saranList.map(s=>`<div class="komentar">- ${s.teks}</div>`).join("");
+  }
+
+  function tambahSaran(){
+    const teks = document.getElementById("saranVisitor").value.trim();
+    if(teks){
+      saranList.push({teks});
+      localStorage.setItem("saranList",JSON.stringify(saranList));
+      document.getElementById("saranVisitor").value="";
+      renderSaran();
+      alert("Terima kasih atas saran Anda!");
+    } else alert("Harap isi saran!");
+  }
+
+  // ====== Login ======
+  const modal = document.getElementById("loginModal");
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userInfo = document.getElementById("user-info");
+  const dashboard = document.getElementById("dashboard");
+
+  loginBtn.onclick=()=>modal.style.display="flex";
+  function closeModal(){modal.style.display="none";}
+  function login(){
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    if(user==="admin" && pass==="123"){
+      localStorage.setItem("isLogin","true");
+      localStorage.setItem("username",user);
+      userInfo.textContent="👤 "+user;
+      loginBtn.style.display="none";
+      logoutBtn.style.display="block";
+      dashboard.style.display="block";
+      closeModal();
+      updateKategoriDropdown();
+      updateCharts();
+    } else alert("Username atau password salah!");
+  }
+  logoutBtn.onclick=()=>{
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("username");
+    userInfo.textContent="";
+    loginBtn.style.display="block";
+    logoutBtn.style.display="none";
+    dashboard.style.display="none";
+  }
+
+  // ====== Tabs Dashboard ======
+  function openTab(tabId){
+    document.querySelectorAll(".tab-content").forEach(tab=>tab.classList.remove("active"));
+    document.getElementById(tabId).classList.add("active");
+  }
+
+  // ====== Scroll ======
+  function scrollToSection(id){
+    document.getElementById(id).scrollIntoView({behavior:"smooth"});
+  }
+
+  // ====== Chart Monitoring ======
+  let produkChart, ratingChart;
+  function updateCharts(){
+    if(!document.getElementById("produkChart")) return;
+
+    const kategoriCounts = {};
+    kategoriList.forEach(k=>kategoriCounts[k]=0);
+    produkList.forEach(p=>{ if(kategoriCounts[p.kategori]!=undefined) kategoriCounts[p.kategori]++; });
+
+    const produkCtx = document.getElementById("produkChart").getContext("2d");
+    if(produkChart) produkChart.destroy();
+    produkChart = new Chart(produkCtx,{
+      type:"doughnut",
+      data:{
+        labels:Object.keys(kategoriCounts),
+        datasets:[{data:Object.values(kategoriCounts), backgroundColor:["#e67e22","#27ae60","#2980b9","#8e44ad","#f1c40f"]}]
+      }
+    });
+
+    const ratingAvg = produkList.map(p=>{
+      if(p.rating.length==0) return 0;
+      return p.rating.reduce((a,b)=>a+b,0)/p.rating.length;
+    });
+    const ratingCtx = document.getElementById("ratingChart").getContext("2d");
+    if(ratingChart) ratingChart.destroy();
+    ratingChart = new Chart(ratingCtx,{
+      type:"doughnut",
+      data:{
+        labels:produkList.map(p=>p.nama),
+        datasets:[{data:ratingAvg, backgroundColor:["#3498db","#2ecc71","#e74c3c","#9b59b6","#f39c12"]}]
+      }
+    });
+  }
+
+  // ====== Export CSV ======
+  function exportCSV(type){
+    let csv="";
+    if(type==="produk"){
+      csv+="Nama,Harga,Kategori,Rating Rata-rata,Jumlah Komentar\n";
+      produkList.forEach(p=>{
+        const avg = p.rating.length>0?(p.rating.reduce((a,b)=>a+b,0)/p.rating.length).toFixed(1):0;
+        csv+=`${p.nama},${p.harga},${p.kategori},${avg},${p.komentar.length}\n`;
+      });
+    } else if(type==="saran"){
+      csv+="Saran\n";
+      saranList.forEach(s=>{
+        csv+=`${s.teks}\n`;
+      });
+    }
+    const blob = new Blob([csv],{type:"text/csv"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href=url;
+    a.download=type+".csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // ====== Inisialisasi ======
+  window.onload=()=>{
     renderProduk(produkList);
-    document.getElementById("namaProduk").value="";
-    document.getElementById("
+    updateKategoriTabs();
+    renderSaran();
+    if(localStorage.getItem("isLogin")==="true"){
+      dashboard.style.display="block";
+      loginBtn.style.display="none";
+      logoutBtn.style.display="block";
+      userInfo.textContent="👤 "+localStorage.getItem("username");
+      updateKategoriDropdown();
+      updateCharts();
+    }
+  }
+</script>
+</body>
+</html>
