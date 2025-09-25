@@ -3,294 +3,288 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Platform Monitoring Data</title>
+  <title>Project B - Monitoring & Produk</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f6fa;
-      overflow-x: hidden;
-    }
-    .container {
-      display: flex;
-      width: 200%;
-      transition: transform 0.6s ease-in-out;
-    }
-    .page {
-      width: 50%;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .login-page {
-      background: linear-gradient(135deg, #2c3e50, #34495e);
-      color: white;
-      flex-direction: column;
-      text-align: center;
-      padding: 20px;
-    }
-    .dashboard-page {
-      background: #ecf0f1;
-      flex-direction: column;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-      width: 100%;
-      max-width: 1000px;
-    }
-    .login-card {
-      background: rgba(255,255,255,0.1);
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-      width: 100%;
-      max-width: 400px;
-    }
-    .hidden {
-      display: none;
-    }
-    input, button, select {
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      width: 100%;
-      font-size: 14px;
-    }
-    button {
-      cursor: pointer;
-      background: #3498db;
-      color: white;
-      border: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #2980b9;
-    }
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    .username {
-      font-weight: bold;
-      color: #2c3e50;
-      margin-right: 10px;
-    }
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    .tabs button {
-      background: #bdc3c7;
-      color: #2c3e50;
-      border-radius: 6px;
-      padding: 8px 12px;
-    }
-    .tabs button.active {
-      background: #3498db;
-      color: white;
-    }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    table, th, td {
-      border: 1px solid #ccc;
-    }
-    th, td {
-      padding: 10px;
-      text-align: center;
-    }
-    canvas {
-      margin-top: 20px;
-      width: 100% !important;
-      max-height: 400px;
-    }
-    .welcome-title {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-    .motivation {
-      margin-top: 20px;
-      font-size: 14px;
-      font-style: italic;
-      color: #ecf0f1;
-    }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f6fa; }
+    header { background:#2c3e50; color:white; padding:15px; text-align:center; }
+    nav { background:#34495e; padding:10px; display:flex; justify-content:space-between; align-items:center; }
+    nav a { color:white; margin:0 10px; text-decoration:none; }
+    nav a:hover { text-decoration:underline; }
+
+    /* Login page */
+    #loginPage { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; }
+    #loginBox { background:white; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,.2); width:300px; text-align:center; }
+    #loginBox h2 { margin-bottom:20px; }
+    #loginBox input { width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:5px; }
+    #loginBox button { width:100%; padding:10px; background:#27ae60; color:white; border:none; border-radius:5px; cursor:pointer; }
+    #loginBox button:hover { background:#2ecc71; }
+    #motivasi { margin-top:15px; font-size:14px; color:#555; }
+
+    /* Dashboard */
+    #dashboard { display:none; padding:20px; }
+    .topbar { display:flex; justify-content:flex-end; align-items:center; margin-bottom:20px; }
+    .topbar span { margin-right:15px; font-weight:bold; }
+    .topbar button { margin-left:10px; padding:8px 12px; border:none; border-radius:5px; cursor:pointer; }
+    .logoutBtn { background:#e74c3c; color:white; }
+    .settingsBtn { background:#3498db; color:white; }
+
+    /* Tabs */
+    .tabs { margin-bottom:20px; }
+    .tabs button { padding:10px 15px; margin-right:5px; border:none; background:#bdc3c7; cursor:pointer; border-radius:5px; }
+    .tabs button.active { background:#2ecc71; color:white; }
+    .tabContent { display:none; }
+    .tabContent.active { display:block; }
+
+    /* Produk table */
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { border:1px solid #ccc; padding:10px; text-align:left; }
+    th { background:#ecf0f1; }
+
+    /* Produk publik */
+    #publicProducts { padding:20px; display:flex; flex-wrap:wrap; gap:20px; }
+    .product-card { background:white; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,.2); padding:15px; width:200px; text-align:center; }
+    .product-card img { width:100%; height:150px; object-fit:cover; border-radius:8px; }
+    .stars { margin:10px 0; }
+    .star { cursor:pointer; font-size:20px; color:#ccc; }
+    .star.selected { color:gold; }
+
+    /* Saran form */
+    #feedbackForm { padding:20px; background:#fff; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,.2); margin:20px; }
+    #feedbackForm input, #feedbackForm textarea { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px; }
+    #feedbackForm button { padding:10px 15px; background:#27ae60; border:none; color:white; border-radius:5px; cursor:pointer; }
+
+    /* Settings Modal */
+    #settingsModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; }
+    #settingsBox { background:white; padding:20px; border-radius:10px; width:300px; }
+    #settingsBox h3 { margin-top:0; }
   </style>
 </head>
 <body>
-  <div id="slider" class="container">
-    <!-- Halaman Login -->
-    <div class="page login-page">
-      <div class="login-card">
-        <div class="welcome-title">Selamat Datang Di Project B</div>
-        <h2>Login Admin</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Login</button>
-        <p id="loginMsg"></p>
-        <div class="motivation">"Kerja keras hari ini adalah investasi untuk sukses esok hari."</div>
-      </div>
-    </div>
 
-    <!-- Halaman Dashboard -->
-    <div class="page dashboard-page">
-      <div class="card">
-        <div class="navbar">
-          <h2>Dashboard Monitoring Data</h2>
-          <div>
-            <span class="username" id="displayUser"></span>
-            <button onclick="logout()">Logout</button>
-          </div>
-        </div>
-        <div class="tabs">
-          <button class="tab-button active" onclick="showTab('barangTab')">Data Barang</button>
-          <button class="tab-button" onclick="showTab('monitoringTab')">Monitoring</button>
-          <button class="tab-button" onclick="showTab('grafikTab')">Grafik</button>
-        </div>
-        <div id="barangTab" class="tab-content active">
-          <h3>Data Barang</h3>
-          <input type="text" id="namaBarang" placeholder="Nama Barang">
-          <input type="number" id="hargaBarang" placeholder="Harga">
-          <input type="date" id="tanggalMasuk">
-          <input type="date" id="tanggalKeluar">
-          <button onclick="addBarang()">Tambah Barang</button>
-          <table>
-            <thead>
-              <tr>
-                <th>Nama Barang</th>
-                <th>Harga</th>
-                <th>Tanggal Masuk</th>
-                <th>Tanggal Keluar</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="barangTable"></tbody>
-          </table>
-        </div>
-        <div id="monitoringTab" class="tab-content">
-          <h3>Monitoring Data Lain</h3>
-          <p>Contoh area monitoring tambahan: status server, jumlah transaksi, dll.</p>
-        </div>
-        <div id="grafikTab" class="tab-content">
-          <h3>Grafik Pengukuran</h3>
-          <canvas id="myChart"></canvas>
-        </div>
-      </div>
-    </div>
+<header>
+  <h1>Project B - Monitoring & Produk</h1>
+</header>
+
+<!-- Public Products -->
+<section id="publicProductsSection">
+  <h2 style="text-align:center; margin-top:20px;">Produk Kami</h2>
+  <div id="publicProducts"></div>
+  <div id="feedbackForm">
+    <h3>Beri Saran</h3>
+    <input type="text" id="visitorName" placeholder="Nama Anda">
+    <textarea id="visitorFeedback" placeholder="Tulis saran..."></textarea>
+    <button onclick="submitFeedback()">Kirim</button>
+  </div>
+</section>
+
+<!-- Login -->
+<section id="loginPage">
+  <div id="loginBox">
+    <h2>Selamat Datang di Project B</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="loginError" style="color:red;"></p>
+    <p id="motivasi">"Terus belajar, terus berkembang, dan jangan pernah menyerah."</p>
+  </div>
+</section>
+
+<!-- Dashboard -->
+<section id="dashboard">
+  <div class="topbar">
+    <span id="loggedUser"></span>
+    <button class="settingsBtn" onclick="openSettings()">Pengaturan</button>
+    <button class="logoutBtn" onclick="logout()">Logout</button>
+  </div>
+  <div class="tabs">
+    <button onclick="openTab('produk')" class="active">Data Produk</button>
+    <button onclick="openTab('monitoring')">Monitoring</button>
+    <button onclick="openTab('feedback')">Saran Visitor</button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const slider = document.getElementById('slider');
-    const loginMsg = document.getElementById('loginMsg');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const displayUser = document.getElementById('displayUser');
+  <div id="produk" class="tabContent active">
+    <h3>Tambah Produk</h3>
+    <input type="text" id="prodName" placeholder="Nama Barang">
+    <input type="number" id="prodPrice" placeholder="Harga">
+    <input type="text" id="prodImg" placeholder="URL Foto">
+    <input type="date" id="prodIn">
+    <input type="date" id="prodOut">
+    <button onclick="addProduct()">Tambah Produk</button>
+    <table>
+      <thead>
+        <tr><th>Nama</th><th>Harga</th><th>Tanggal Masuk</th><th>Tanggal Keluar</th><th>Foto</th><th>Aksi</th></tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+  </div>
 
-    async function hash(text) {
-      const msgBuffer = new TextEncoder().encode(text);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2,'0')).join('');
+  <div id="monitoring" class="tabContent">
+    <h3>Grafik Monitoring</h3>
+    <canvas id="monitorChart" width="400" height="200"></canvas>
+  </div>
+
+  <div id="feedback" class="tabContent">
+    <h3>Daftar Saran Visitor</h3>
+    <ul id="feedbackList"></ul>
+  </div>
+</section>
+
+<!-- Settings Modal -->
+<div id="settingsModal">
+  <div id="settingsBox">
+    <h3>Pengaturan</h3>
+    <input type="password" id="newPassword" placeholder="Password Baru">
+    <button onclick="changePassword()">Ubah Password</button>
+    <button onclick="resetProducts()">Reset Produk</button>
+    <button onclick="exportCSV()">Export CSV</button>
+    <button onclick="closeSettings()">Tutup</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // ================== Utilities ===================
+  function formatRupiah(angka) {
+    return new Intl.NumberFormat('id-ID', {style:'currency', currency:'IDR'}).format(angka);
+  }
+  function saveLocal(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
+  function loadLocal(key) { return JSON.parse(localStorage.getItem(key)) || []; }
+
+  // ================== Auth ===================
+  if(!localStorage.getItem('adminPass')) localStorage.setItem('adminPass','12345');
+
+  function login(){
+    const u=document.getElementById('username').value;
+    const p=document.getElementById('password').value;
+    const pass=localStorage.getItem('adminPass');
+    if(u==='admin' && p===pass){
+      document.getElementById('loginPage').style.display='none';
+      document.getElementById('dashboard').style.display='block';
+      document.getElementById('publicProductsSection').style.display='none';
+      document.getElementById('loggedUser').innerText="Admin";
+      renderProducts();
+      renderFeedback();
+      renderChart();
+    } else {
+      document.getElementById('loginError').innerText="Username/Password salah!";
     }
+  }
+  function logout(){
+    document.getElementById('dashboard').style.display='none';
+    document.getElementById('loginPage').style.display='flex';
+    document.getElementById('publicProductsSection').style.display='block';
+  }
 
-    async function initAdmin() {
-      if(!localStorage.getItem('adminUser')){
-        const hashed = await hash('12345');
-        localStorage.setItem('adminUser', JSON.stringify({username:'admin', password:hashed}));
-      }
-    }
-    initAdmin();
+  // ================== Tabs ===================
+  function openTab(tab){
+    document.querySelectorAll('.tabContent').forEach(el=>el.classList.remove('active'));
+    document.querySelectorAll('.tabs button').forEach(el=>el.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+    event.target.classList.add('active');
+  }
 
-    async function login(){
-      const user = JSON.parse(localStorage.getItem('adminUser'));
-      const u = usernameInput.value;
-      const p = await hash(passwordInput.value);
+  // ================== Produk ===================
+  function addProduct(){
+    const list=loadLocal('products');
+    list.push({
+      name:document.getElementById('prodName').value,
+      price:parseInt(document.getElementById('prodPrice').value),
+      img:document.getElementById('prodImg').value,
+      in:document.getElementById('prodIn').value,
+      out:document.getElementById('prodOut').value,
+      ratings:[]
+    });
+    saveLocal('products',list);
+    renderProducts();
+    renderPublicProducts();
+  }
 
-      if(u === user.username && p === user.password){
-        sessionStorage.setItem('loggedIn','true');
-        sessionStorage.setItem('username', u);
-        slider.style.transform = 'translateX(-50%)';
-        loginMsg.textContent = '';
-        displayUser.textContent = `👤 ${u}`;
-        renderChart();
-      } else {
-        loginMsg.textContent = 'Username atau password salah';
-      }
-    }
+  function deleteProduct(i){
+    const list=loadLocal('products');
+    list.splice(i,1);
+    saveLocal('products',list);
+    renderProducts();
+    renderPublicProducts();
+  }
 
-    function logout(){
-      sessionStorage.removeItem('loggedIn');
-      sessionStorage.removeItem('username');
-      slider.style.transform = 'translateX(0)';
-    }
+  function renderProducts(){
+    const list=loadLocal('products');
+    const tb=document.getElementById('productTable'); tb.innerHTML="";
+    list.forEach((p,i)=>{
+      tb.innerHTML+=`<tr>
+        <td>${p.name}</td><td>${formatRupiah(p.price)}</td>
+        <td>${p.in}</td><td>${p.out}</td>
+        <td><img src="${p.img}" width="50"></td>
+        <td><button onclick="deleteProduct(${i})">Hapus</button></td>
+      </tr>`;
+    });
+  }
 
-    function showTab(tabId){
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
-    }
+  function renderPublicProducts(){
+    const list=loadLocal('products');
+    const div=document.getElementById('publicProducts'); div.innerHTML="";
+    list.forEach((p,i)=>{
+      let avg= p.ratings.length ? (p.ratings.reduce((a,b)=>a+b)/p.ratings.length).toFixed(1):"0";
+      div.innerHTML+=`<div class="product-card">
+        <img src="${p.img}" alt="${p.name}">
+        <h4>${p.name}</h4>
+        <p>${formatRupiah(p.price)}</p>
+        <div class="stars">${[1,2,3,4,5].map(n=>`<span class="star ${n<=avg?'selected':''}" onclick="rateProduct(${i},${n})">&#9733;</span>`).join('')}</div>
+        <small>Rating: ${avg}</small>
+      </div>`;
+    });
+  }
+  function rateProduct(i,n){
+    const list=loadLocal('products');
+    list[i].ratings.push(n);
+    saveLocal('products',list);
+    renderPublicProducts();
+  }
 
-    function addBarang(){
-      const nama = document.getElementById('namaBarang').value;
-      const harga = document.getElementById('hargaBarang').value;
-      const masuk = document.getElementById('tanggalMasuk').value;
-      const keluar = document.getElementById('tanggalKeluar').value;
+  // ================== Feedback ===================
+  function submitFeedback(){
+    const list=loadLocal('feedbacks');
+    list.push({name:document.getElementById('visitorName').value, msg:document.getElementById('visitorFeedback').value});
+    saveLocal('feedbacks',list);
+    document.getElementById('visitorName').value="";
+    document.getElementById('visitorFeedback').value="";
+    renderFeedback();
+  }
+  function renderFeedback(){
+    const list=loadLocal('feedbacks');
+    const ul=document.getElementById('feedbackList'); ul.innerHTML="";
+    list.forEach(f=>{ ul.innerHTML+=`<li><b>${f.name}:</b> ${f.msg}</li>`; });
+  }
 
-      if(nama && harga && masuk){
-        const table = document.getElementById('barangTable');
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${nama}</td><td>${harga}</td><td>${masuk}</td><td>${keluar}</td><td><button onclick="this.parentElement.parentElement.remove()">Hapus</button></td>`;
-        table.appendChild(row);
-        document.getElementById('namaBarang').value = '';
-        document.getElementById('hargaBarang').value = '';
-        document.getElementById('tanggalMasuk').value = '';
-        document.getElementById('tanggalKeluar').value = '';
-      }
-    }
+  // ================== Monitoring ===================
+  function renderChart(){
+    const ctx=document.getElementById('monitorChart').getContext('2d');
+    new Chart(ctx,{
+      type:'line',
+      data:{labels:["Jan","Feb","Mar","Apr","Mei"],datasets:[{label:"Penjualan",data:[10,20,15,25,30],borderColor:'green'}]},
+    });
+  }
 
-    function renderChart(){
-      const ctx = document.getElementById('myChart');
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['Januari','Februari','Maret','April','Mei','Juni'],
-          datasets: [{
-            label: 'Penjualan',
-            data: [12, 19, 3, 5, 2, 3],
-            borderColor: 'rgba(52, 152, 219,1.0)',
-            backgroundColor: 'rgba(52, 152, 219,0.2)'
-          }]
-        }
-      });
-    }
+  // ================== Settings ===================
+  function openSettings(){ document.getElementById('settingsModal').style.display='flex'; }
+  function closeSettings(){ document.getElementById('settingsModal').style.display='none'; }
+  function changePassword(){
+    localStorage.setItem('adminPass',document.getElementById('newPassword').value);
+    alert("Password diganti!");
+  }
+  function resetProducts(){ localStorage.removeItem('products'); renderProducts(); renderPublicProducts(); }
+  function exportCSV(){
+    const list=loadLocal('products');
+    let csv="Nama,Harga,Tanggal Masuk,Tanggal Keluar\n";
+    list.forEach(p=>{csv+=`${p.name},${p.price},${p.in},${p.out}\n`;});
+    const blob=new Blob([csv],{type:"text/csv"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download="produk.csv"; a.click();
+  }
 
-    window.onload = () => {
-      if(sessionStorage.getItem('loggedIn')){
-        slider.style.transform = 'translateX(-50%)';
-        displayUser.textContent = `👤 ${sessionStorage.getItem('username')}`;
-        renderChart();
-      }
-    }
-  </script>
+  // Init
+  renderPublicProducts();
+</script>
 </body>
 </html>
+
