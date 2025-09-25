@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Platform Monitoring Data - Dengan Autentikasi</title>
+  <title>Platform Monitoring Data - Autentikasi & Keamanan</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -134,31 +134,56 @@
   </div>
 
   <script>
-    // Data login sederhana
-    const akun = {
-      username: "admin",
-      password: "12345"
-    };
+    // Fungsi hash sederhana untuk enkripsi password (SHA-256)
+    async function hashPassword(password) {
+      const msgUint8 = new TextEncoder().encode(password);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-    function login(event) {
+    // Simpan akun terenkripsi di localStorage jika belum ada
+    (async function setupAccount(){
+      if (!localStorage.getItem("userAccount")) {
+        const hashed = await hashPassword("12345");
+        const akun = { username: "admin", password: hashed };
+        localStorage.setItem("userAccount", JSON.stringify(akun));
+      }
+    })();
+
+    async function login(event) {
       event.preventDefault();
       let user = document.getElementById("username").value;
       let pass = document.getElementById("password").value;
+      let akun = JSON.parse(localStorage.getItem("userAccount"));
 
-      if (user === akun.username && pass === akun.password) {
+      const hashedPass = await hashPassword(pass);
+
+      if (user === akun.username && hashedPass === akun.password) {
         document.getElementById("loginForm").classList.add("hidden");
         document.getElementById("dashboard").classList.remove("hidden");
         document.getElementById("userDisplay").innerText = user;
+        sessionStorage.setItem("loggedIn", "true");
       } else {
         document.getElementById("loginError").style.display = "block";
       }
     }
 
     function logout() {
+      sessionStorage.removeItem("loggedIn");
       document.getElementById("dashboard").classList.add("hidden");
       document.getElementById("loginForm").classList.remove("hidden");
       document.getElementById("username").value = "";
       document.getElementById("password").value = "";
+    }
+
+    // Auto login check jika session masih aktif
+    window.onload = function(){
+      if (sessionStorage.getItem("loggedIn") === "true") {
+        document.getElementById("loginForm").classList.add("hidden");
+        document.getElementById("dashboard").classList.remove("hidden");
+        document.getElementById("userDisplay").innerText = "admin";
+      }
     }
 
     // Data Table CRUD sederhana
@@ -185,6 +210,7 @@
 
 </body>
 </html>
+
 
 
 
